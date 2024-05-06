@@ -44,6 +44,23 @@ import org.tensorflow.lite.examples.objectdetection.R
 import org.tensorflow.lite.examples.objectdetection.databinding.FragmentCameraBinding
 import org.tensorflow.lite.task.vision.detector.Detection
 
+/**
+ * # Camera Action
+ * 1. **Camera Setup:** The `setUpCamera()` function initializes the camera provider and binds the camera use cases. The camera provider is a singleton object that can be used to bind the lifecycle of cameras to the lifecycle owner within the context of an app.
+ *
+ * 2. **Camera Use Cases:** The `bindCameraUseCases()` function declares and binds the preview and image analysis use cases. The preview use case provides a live camera feed, while the image analysis use case processes the camera feed frame by frame.
+ *
+ * 3. **Object Detection:** The `detectObjects(image: ImageProxy)` function is where each frame from the camera feed is passed to the `ObjectDetectorHelper` for object detection. The detected objects are then drawn on the `OverlayView`.
+ *
+ * 4. **UI Updates:** The `onResults()` function is called when the object detection results are ready. It updates the UI with the detection results and forces a redraw of the `OverlayView`.
+ *
+ * 5. **UI Controls:** The `initBottomSheetControls()` function attaches listeners to the UI control widgets. These controls allow the user to adjust the object detection parameters, such as the detection score threshold, the maximum number of detectable objects, and the number of threads used for detection.
+ *
+ * 6. **Error Handling:** The `onError()` function is called when there's an error in object detection. It displays the error message to the user.
+ *
+ * `CameraFragment` is responsible for setting up and managing the camera feed, handling object detection on the camera feed, and updating the UI based on the detection results.
+ */
+
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     private val TAG = "ObjectDetection"

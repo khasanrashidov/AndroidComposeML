@@ -28,6 +28,29 @@ import com.google.mlkit.vision.objects.ObjectDetector
 import com.google.mlkit.vision.objects.ObjectDetectorOptionsBase
 import java.io.IOException
 
+/**
+ * # A processor to run object detector.
+ *
+ * 1. **InputImage Creation**: An `InputImage` is created from a frame captured from the device's camera.
+ *  This image is then passed to the `detectInImage` function.
+ * 2. **Image Processing**: The `detectInImage` function processes the `InputImage` using
+ *  the `ObjectDetector` instance (`detector`). This is done by calling `detector.process(image)`,
+ *  which processes the image and returns a `Task` object. The `Task` object represents a pending
+ *  operation that produces a list of `DetectedObject` when it's complete.
+ * 3. **Task Completion**: Once the `Task` is complete, it triggers the `addOnSuccessListener` or
+ * `addOnFailureListener` methods. If the task is successful, it triggers the `addOnSuccessListener`
+ *  method, passing the list of `DetectedObject` to it.
+ * 4. **Success Handling**: In the `addOnSuccessListener` method, the `onSuccess` function of
+ *  the `ObjectDetectorProcessor` class is called. This function receives the list of `DetectedObject`
+ *  and a `GraphicOverlay`. It then adds an `ObjectGraphic` for each `DetectedObject` to the `GraphicOverlay`.
+ * 5. **Failure Handling**: If the `Task` fails, it triggers the `addOnFailureListener` method,
+ *  which calls the `onFailure` function of the `ObjectDetectorProcessor` class.
+ * 6. **UI Update**: After the `GraphicOverlay` is updated with the new graphics, it's invalidated
+ *  with `postInvalidate()`, which causes it to be redrawn on the screen.
+ */
+
+
+
 /** A processor to run object detector.  */
 class ObjectDetectorProcessor(context: Context, options: ObjectDetectorOptionsBase) :
   VisionProcessorBase<List<DetectedObject>>(context) {

@@ -56,6 +56,29 @@ import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.io.IOException
 
+/**
+ * # Live preview demo for ML Kit APIs.
+ *
+ * This activity uses [CameraSource] to capture video frames in real-time and perform detection on them.
+ * The detection algorithms are selected based on the user's choice and are implemented in various
+ * `VisionProcessorBase` subclasses.
+ *
+ * The control flow is as follows:
+ * 1. [CameraSource]: The `CameraSource` is created and configured in this file. It's responsible for managing the camera and capturing frames.
+ * 2. [startCameraSource]: The `startCameraSource` method is called to start the `CameraSource`. This begins the process of capturing frames
+ *    from the camera and processing them with the `MLProcessor`.
+ * 3. [ImageBuffer]: The `CameraSource` captures frames and puts them into an `ImageBuffer`. This buffer holds the raw image data that will be processed.
+ * 4. [Image]: The `MLProcessor` takes the frames from the `ImageBuffer` and converts them into `InputImage` objects. The `InputImage` class is a part
+ *    of the ML Kit library and is the format that the ML Kit models expect for their input.
+ * 5. [MLImageProcessor]: The `MLProcessor` processes the `InputImage` using the ML Kit model. This involves running the model on the image data
+ *    and producing a result. The result is returned as a `Task` object.
+ * 6. [Task]: The `Task` object represents the result of the model. It's an asynchronous operation that can either succeed, providing a result,
+ *    or fail, throwing an exception. The result of the `Task` is a list of detected objects, faces, poses, etc., depending on the model used.
+ * 7. [GraphicsOverlay]: The `GraphicOverlay` is a custom view that is used to draw the results of the image processing on top of the camera preview.
+ *    When the `Task` completes, the `onSuccess` method of the `MLProcessor` is called. This method receives the list of detected objects and a `GraphicOverlay`. For each detected object, it creates a `Graphic` (like `ObjectGraphic`, `FaceGraphic`, `PoseGraphic`, etc.) and adds it to the `GraphicOverlay`. The `GraphicOverlay` then draws these graphics on top of the camera preview.
+ */
+
+
 /** Live preview demo for ML Kit APIs. */
 @KeepName
 class LivePreviewActivity :
